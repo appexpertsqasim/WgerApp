@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Wger</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <!--App Message-->
+    <string name="api_retry_error">Please retry!</string>
+    <string name="api_default_error">Something wrong happened!</string>
+    <string name="some_error">Some Error Occurred!</string>
+    <string name="connection_error">Internet connection lost!</string>
+    <string name="main_muscles">main Muscles</string>
+    <string name="secondary_muscles">Secondary Muscles</string>
+    <string name="muscles_info">The diagram shows the most used muscles on this exercise</string>
+    <string name="GPSAlertDialogMessage">Finding current location</string>
+    <string name="cancel">process cancelled</string>
+    <string name="GPSAlertDialogTitle">please check your location settings</string>
+    <string name="title_activity_nearest_gyms">Map</string>
+
+</resources>
