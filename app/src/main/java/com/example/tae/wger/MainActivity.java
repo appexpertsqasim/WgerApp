@@ -17,6 +17,7 @@ import android.view.View;
 import com.example.tae.wger.fragments.EquipmentFragment;
 import com.example.tae.wger.fragments.ExerciseFragment;
 import com.example.tae.wger.fragments.MuscleFragment;
+import com.example.tae.wger.fragments.WorkoutFragment;
 import com.example.tae.wger.maps.NearestGyms;
 
 public class MainActivity extends AppCompatActivity
@@ -100,6 +101,8 @@ FragmentManager fragmentManager;
                     .commit();
 
         } else if (id == R.id.nav_manage) {
+            fragmentManager.beginTransaction().replace(R.id.container,new WorkoutFragment())
+                    .commit();
 
         } else if (id == R.id.nav_share) {
 

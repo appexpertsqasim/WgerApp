@@ -19,7 +19,7 @@ import com.example.tae.wger.model.EquipmentModel;
 public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equipmentViewHolder>{
     EquipmentModel equipment;
 
-    //List<EquipmentModel> equipment;
+    //List<EquipmentModel> workout;
     int row;
     Context applicationContext;
     EquipmentRecyclerViewClickListener rListener;
@@ -57,7 +57,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equi
         TextView name;
         public equipmentViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.subtitle);
+            name = (TextView) itemView.findViewById(R.id.equipment_tv);
         }
 
         public void bind(final EquipmentModel.Result result, final EquipmentRecyclerViewClickListener rListener) {

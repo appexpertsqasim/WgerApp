@@ -5,6 +5,7 @@ import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.MuscleModel;
+import com.example.tae.wger.model.WorkoutModel;
 
 import io.reactivex.Observable;
 
@@ -16,6 +17,8 @@ public interface ApiHelper {
 Observable<EquipmentModel> useCaseEquipment();
     Observable<ExerciseModel> useCaseExercise(int id);
     Observable<ExerciseModel> useCaseExercise();
+    Observable<WorkoutModel> useCaseworkout();
     Observable<MuscleModel> useCaseMuscle();
+    Observable<WorkoutModel.Result> usecaseAddWorkout(String comment);
     Observable<ExerciseInfoModel.Result> useCaseExerciseInfo(int id);
 }

@@ -5,9 +5,10 @@ package com.example.tae.wger.services;
  */
 
 public class ApiConstants {
+
     public static final String BASE_URL=" https://wger.de/api/v2/";
     public static final String Equipment="equipment";
-    public static final String Workout="workout";
+    public static final String Workout="workout/";
     public static final String Exercise="exercise/";
     public static final String Muscle="muscle/";
     public static final String ExerciseInfo="exerciseinfo/{id}";

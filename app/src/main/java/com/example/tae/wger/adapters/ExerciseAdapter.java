@@ -20,7 +20,7 @@ import com.example.tae.wger.model.ExerciseModel;
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.exerciseViewHolder>{
      ExerciseModel exerciseModel;
 
-    //List<EquipmentModel> equipment;
+    //List<EquipmentModel> workout;
     int row;
     Context applicationContext;
     ExerciseRecyclerViewClickListener rListener;

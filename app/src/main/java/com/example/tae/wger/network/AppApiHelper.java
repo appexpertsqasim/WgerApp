@@ -7,6 +7,7 @@ import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.MuscleModel;
+import com.example.tae.wger.model.WorkoutModel;
 import com.example.tae.wger.services.ConnectionService;
 import com.example.tae.wger.services.reqInterface;
 
@@ -41,9 +42,22 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Observable<WorkoutModel> useCaseworkout() {
+        return reqInterface.getWorkout();
+    }
+
+    @Override
     public Observable<MuscleModel> useCaseMuscle() {
         return reqInterface.getMuscle();
     }
+
+    @Override
+    public Observable<WorkoutModel.Result> usecaseAddWorkout(String comment) {
+        Log.i("usecase workout","called");
+        return reqInterface.addWorkout(comment);
+    }
+
+
 
     @Override
     public Observable<ExerciseInfoModel.Result> useCaseExerciseInfo(int id) {

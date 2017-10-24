@@ -19,7 +19,7 @@ import com.example.tae.wger.model.MuscleModel;
 public class MuscleAdapter extends RecyclerView.Adapter<MuscleAdapter.muscleViewHolder>{
      MuscleModel muscleModel;
 
-    //List<EquipmentModel> equipment;
+    //List<EquipmentModel> workout;
     int row;
     Context applicationContext;
     MuscleRecyclerViewClickListener rListener;
