@@ -83,11 +83,13 @@ public class WorkoutFragment extends Fragment implements IWorkoutListMvpView {
             @Override
             public void onItemClick(WorkoutModel.Result item) {
                 Integer cid=item.getId();
-                Fragment fr=new ExerciseFragment();
+                String cDate=item.getCreationDate();
+                Fragment fr=new WorkoutLogFragment();
                 FragmentManager fm=getFragmentManager();
                 FragmentTransaction ft=fm.beginTransaction();
                 Bundle args = new Bundle();
                 args.putInt("CID", cid);
+                args.putString("CID2", cDate);
                 fr.setArguments(args);
                 ft.replace(R.id.container, fr);
                 ft.commit();

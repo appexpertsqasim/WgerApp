@@ -5,6 +5,7 @@ import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.MuscleModel;
+import com.example.tae.wger.model.WorkoutLogModel;
 import com.example.tae.wger.model.WorkoutModel;
 
 import io.reactivex.Observable;
@@ -43,6 +44,16 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<WorkoutModel.Result> usecaseAddWorkout(String comment) {
         return apiHelper.usecaseAddWorkout(comment);
+    }
+
+    @Override
+    public Observable<WorkoutLogModel> useCaseWorkoutLog() {
+        return apiHelper.useCaseWorkoutLog();
+    }
+
+    @Override
+    public Observable<WorkoutLogModel.Result> usecaseAddWorkoutLog(int reps, String weight, String date, int exercise, int workout, int rep, int weight_unit) {
+        return apiHelper.usecaseAddWorkoutLog(reps,weight,date,exercise,workout,rep,weight_unit);
     }
 
     @Override

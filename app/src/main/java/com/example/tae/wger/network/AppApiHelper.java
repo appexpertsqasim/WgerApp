@@ -7,6 +7,7 @@ import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.MuscleModel;
+import com.example.tae.wger.model.WorkoutLogModel;
 import com.example.tae.wger.model.WorkoutModel;
 import com.example.tae.wger.services.ConnectionService;
 import com.example.tae.wger.services.reqInterface;
@@ -57,6 +58,15 @@ public class AppApiHelper implements ApiHelper {
         return reqInterface.addWorkout(comment);
     }
 
+    @Override
+    public Observable<WorkoutLogModel> useCaseWorkoutLog() {
+        return reqInterface.getWorkoutLog();
+    }
+
+    @Override
+    public Observable<WorkoutLogModel.Result> usecaseAddWorkoutLog(int reps, String weight, String date, int exercise, int workout, int rep, int weight_unit) {
+        return reqInterface.addWorkoutLog(reps,weight,date,exercise,workout,rep,weight_unit);
+    }
 
 
     @Override
