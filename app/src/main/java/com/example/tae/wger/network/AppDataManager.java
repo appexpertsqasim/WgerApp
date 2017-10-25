@@ -47,8 +47,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<WorkoutLogModel> useCaseWorkoutLog() {
-        return apiHelper.useCaseWorkoutLog();
+    public Observable<WorkoutLogModel> useCaseWorkoutLog(int id) {
+        return apiHelper.useCaseWorkoutLog(id);
     }
 
     @Override

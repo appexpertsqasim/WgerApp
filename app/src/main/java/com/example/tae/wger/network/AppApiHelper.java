@@ -59,8 +59,8 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<WorkoutLogModel> useCaseWorkoutLog() {
-        return reqInterface.getWorkoutLog();
+    public Observable<WorkoutLogModel> useCaseWorkoutLog(int id) {
+        return reqInterface.getWorkoutLog(id);
     }
 
     @Override

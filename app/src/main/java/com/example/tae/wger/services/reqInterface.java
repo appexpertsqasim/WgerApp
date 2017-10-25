@@ -52,7 +52,7 @@ public interface reqInterface {
             ApiConstants.HEADER_AUTHORIZATION,
     })
     @GET(ApiConstants.WorkoutLog)
-    Observable<WorkoutLogModel> getWorkoutLog();
+    Observable<WorkoutLogModel> getWorkoutLog(@Query("workout") int id);
     @GET(ApiConstants.Exercise)
     Observable<ExerciseModel> getExercise(@Query("equipment") int id);
     @GET(ApiConstants.Exercise)

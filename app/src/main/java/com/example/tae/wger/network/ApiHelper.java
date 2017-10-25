@@ -21,7 +21,7 @@ Observable<EquipmentModel> useCaseEquipment();
     Observable<WorkoutModel> useCaseworkout();
     Observable<MuscleModel> useCaseMuscle();
     Observable<WorkoutModel.Result> usecaseAddWorkout(String comment);
-    Observable<WorkoutLogModel> useCaseWorkoutLog();
+    Observable<WorkoutLogModel> useCaseWorkoutLog(int id);
     Observable<WorkoutLogModel.Result> usecaseAddWorkoutLog(int reps, String weight, String date,
                                                              int exercise,int workout, int rep, int weight_unit) ;
     Observable<ExerciseInfoModel.Result> useCaseExerciseInfo(int id);
