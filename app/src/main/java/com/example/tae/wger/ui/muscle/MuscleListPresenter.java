@@ -9,6 +9,8 @@ import com.example.tae.wger.network.DataManager;
 import com.example.tae.wger.ui.base.BasePresenter;
 import com.example.tae.wger.ui.utils.rx.SchedulerProvider;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
@@ -18,7 +20,7 @@ import io.reactivex.functions.Consumer;
 
 public class MuscleListPresenter<V extends IMuscleListMvpView> extends BasePresenter<V> implements IMuscleListMvpPresenter<V> {
 
-
+    @Inject
     public MuscleListPresenter(DataManager dataManager, SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }

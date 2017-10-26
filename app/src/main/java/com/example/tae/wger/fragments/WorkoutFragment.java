@@ -14,23 +14,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.tae.wger.DI.component.DaggerIActivityComponent;
+import com.example.tae.wger.DI.component.IActivityComponent;
+import com.example.tae.wger.DI.module.ActivityModule;
+import com.example.tae.wger.MyApplication;
 import com.example.tae.wger.R;
 import com.example.tae.wger.adapters.WorkoutAdapter;
 import com.example.tae.wger.listener.WorkoutRecyclerViewClickListener;
 import com.example.tae.wger.model.WorkoutModel;
-import com.example.tae.wger.network.AppDataManager;
-import com.example.tae.wger.ui.utils.rx.AppSchedulerProvider;
+import com.example.tae.wger.ui.base.BaseFragment;
 import com.example.tae.wger.ui.workout.IWorkoutListMvpView;
 import com.example.tae.wger.ui.workout.WorkoutListPresenter;
 
-import io.reactivex.disposables.CompositeDisposable;
+import javax.inject.Inject;
+
+import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
  * Created by TAE on 23/10/2017.
  */
 
-public class WorkoutFragment extends Fragment implements IWorkoutListMvpView {
+public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView {
+    @Inject
     WorkoutListPresenter<IWorkoutListMvpView> WorkoutListPresenter;
+    IActivityComponent iActivityComponent;
+
+    public IActivityComponent getiActivityComponent() {
+        return iActivityComponent;
+    }
     RecyclerView recyclerView;
     Button workout;
     SwipeRefreshLayout refresh;
@@ -45,7 +56,8 @@ public class WorkoutFragment extends Fragment implements IWorkoutListMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        WorkoutListPresenter = new WorkoutListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
+        initialiseDagger();
+       // WorkoutListPresenter = new WorkoutListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         WorkoutListPresenter.onAttach(this);
         WorkoutListPresenter.onViewPrepared();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -122,5 +134,13 @@ public class WorkoutFragment extends Fragment implements IWorkoutListMvpView {
     @Override
     public boolean isNetworkConnected() {
         return false;
+    }
+    private void initialiseDagger() {
+        iActivityComponent = DaggerIActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .iAppComponent(((MyApplication) getApplication()).getiApplicationComponent())
+                .build();
+
+        getiActivityComponent().inject(this);
     }
 }

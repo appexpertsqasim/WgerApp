@@ -12,6 +12,9 @@ import com.example.tae.wger.R;
 import com.example.tae.wger.listener.EquipmentRecyclerViewClickListener;
 import com.example.tae.wger.model.EquipmentModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by TAE on 19/10/2017.
  */
@@ -54,10 +57,11 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equi
     }
 
     public class equipmentViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.equipment_tv)
         TextView name;
         public equipmentViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.equipment_tv);
+            ButterKnife.bind(this,itemView);
         }
 
         public void bind(final EquipmentModel.Result result, final EquipmentRecyclerViewClickListener rListener) {

@@ -12,15 +12,18 @@ import com.example.tae.wger.model.WorkoutModel;
 import com.example.tae.wger.services.ConnectionService;
 import com.example.tae.wger.services.reqInterface;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 
 /**
  *Created by TAE on 19/10/2017.
  */
-
+@Singleton
 public class AppApiHelper implements ApiHelper {
     reqInterface reqInterface;
-
+    @Inject
     public AppApiHelper() {
         this.reqInterface = ConnectionService.getConnectionService();
     }

@@ -8,14 +8,18 @@ import com.example.tae.wger.model.MuscleModel;
 import com.example.tae.wger.model.WorkoutLogModel;
 import com.example.tae.wger.model.WorkoutModel;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 
 /**
  * Created by TAE on 19/10/2017.
  */
-
+@Singleton
 public class AppDataManager implements DataManager {
     ApiHelper apiHelper;
+    @Inject
     public AppDataManager(){this.apiHelper=new AppApiHelper();}
     @Override
     public Observable<EquipmentModel> useCaseEquipment() {

@@ -8,6 +8,9 @@ import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.network.DataManager;
 import com.example.tae.wger.ui.base.BasePresenter;
 import com.example.tae.wger.ui.utils.rx.SchedulerProvider;
+
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
@@ -17,7 +20,7 @@ import io.reactivex.functions.Consumer;
 
 public class EquipmentListPresenter<V extends IEquipmentListMvpView> extends BasePresenter<V> implements IEquipmentListMvpPresenter<V> {
 
-
+    @Inject
     public EquipmentListPresenter(DataManager dataManager, SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }

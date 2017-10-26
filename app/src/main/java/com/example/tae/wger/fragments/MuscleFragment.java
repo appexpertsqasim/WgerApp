@@ -12,25 +12,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tae.wger.DI.component.DaggerIActivityComponent;
+import com.example.tae.wger.DI.component.IActivityComponent;
+import com.example.tae.wger.DI.module.ActivityModule;
+import com.example.tae.wger.MyApplication;
 import com.example.tae.wger.R;
 import com.example.tae.wger.adapters.MuscleAdapter;
 import com.example.tae.wger.listener.MuscleRecyclerViewClickListener;
 import com.example.tae.wger.model.MuscleModel;
-import com.example.tae.wger.network.AppDataManager;
+import com.example.tae.wger.ui.base.BaseFragment;
 import com.example.tae.wger.ui.muscle.IMuscleListMvpView;
 import com.example.tae.wger.ui.muscle.MuscleListPresenter;
-import com.example.tae.wger.ui.utils.rx.AppSchedulerProvider;
 
-import io.reactivex.disposables.CompositeDisposable;
+import javax.inject.Inject;
+
+import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
  * Created by TAE on 19/10/2017.
  */
 
-public class MuscleFragment extends Fragment implements IMuscleListMvpView {
+public class MuscleFragment extends BaseFragment implements IMuscleListMvpView {
+    @Inject
     MuscleListPresenter<IMuscleListMvpView> muscleListPresenter;
     RecyclerView recyclerView;
+    IActivityComponent iActivityComponent;
 
+    public IActivityComponent getiActivityComponent() {
+        return iActivityComponent;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +52,8 @@ public class MuscleFragment extends Fragment implements IMuscleListMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        muscleListPresenter = new MuscleListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
+        initialiseDagger();
+        //muscleListPresenter = new MuscleListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         muscleListPresenter.onAttach(this);
         muscleListPresenter.onViewPrepared();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -96,5 +107,13 @@ public class MuscleFragment extends Fragment implements IMuscleListMvpView {
     @Override
     public boolean isNetworkConnected() {
         return false;
+    }
+    private void initialiseDagger() {
+        iActivityComponent = DaggerIActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .iAppComponent(((MyApplication) getApplication()).getiApplicationComponent())
+                .build();
+
+        getiActivityComponent().inject(this);
     }
 }

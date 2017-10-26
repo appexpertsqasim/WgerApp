@@ -4,7 +4,6 @@ import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,30 +17,40 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.caverock.androidsvg.SVG;
+import com.example.tae.wger.DI.component.DaggerIActivityComponent;
+import com.example.tae.wger.DI.component.IActivityComponent;
+import com.example.tae.wger.DI.module.ActivityModule;
+import com.example.tae.wger.MyApplication;
 import com.example.tae.wger.R;
 import com.example.tae.wger.model.ExerciseInfoModel;
-import com.example.tae.wger.network.AppDataManager;
 import com.example.tae.wger.svg.SvgDecoder;
 import com.example.tae.wger.svg.SvgDrawableTranscoder;
 import com.example.tae.wger.svg.SvgSoftwareLayerSetter;
+import com.example.tae.wger.ui.base.BaseFragment;
 import com.example.tae.wger.ui.exercise_info.ExerciseInfoListPresenter;
 import com.example.tae.wger.ui.exercise_info.IExerciseInfoListMvpView;
-import com.example.tae.wger.ui.utils.rx.AppSchedulerProvider;
 
 import java.io.InputStream;
 
-import io.reactivex.disposables.CompositeDisposable;
+import javax.inject.Inject;
+
+import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
  * Created by TAE on 19/10/2017.
  */
 
-public class ExerciseInfoFragment extends Fragment implements IExerciseInfoListMvpView {
+public class ExerciseInfoFragment extends BaseFragment implements IExerciseInfoListMvpView {
+    @Inject
     ExerciseInfoListPresenter<IExerciseInfoListMvpView> exerciseInfoListPresenter;
     Integer exerciseId;
     TextView category,description,name,equipment;
-    StringBuilder stringBuilder;
     ImageView svg_front_muscle,svg_front,svg_back,svg_back_muscle;
+    IActivityComponent iActivityComponent;
+
+    public IActivityComponent getiActivityComponent() {
+        return iActivityComponent;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +64,8 @@ public class ExerciseInfoFragment extends Fragment implements IExerciseInfoListM
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        exerciseInfoListPresenter = new ExerciseInfoListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
+        initialiseDagger();
+       // exerciseInfoListPresenter = new ExerciseInfoListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         exerciseInfoListPresenter.onAttach(this);
         exerciseInfoListPresenter.onViewPrepared(exerciseId);
         category=(TextView)view.findViewById(R.id.category_tv);
@@ -114,7 +124,14 @@ public class ExerciseInfoFragment extends Fragment implements IExerciseInfoListM
     public boolean isNetworkConnected() {
         return false;
     }
+    private void initialiseDagger() {
+        iActivityComponent = DaggerIActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .iAppComponent(((MyApplication) getApplication()).getiApplicationComponent())
+                .build();
 
+        getiActivityComponent().inject(this);
+    }
     public void svgImageLoader(ExerciseInfoModel.Result exerciseInfoModel){
         GenericRequestBuilder requestBuilder = Glide.with(getActivity())
                 .using(Glide.buildStreamModelLoader(Uri.class, getActivity()), InputStream.class)

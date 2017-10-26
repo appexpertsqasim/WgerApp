@@ -12,23 +12,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tae.wger.DI.component.DaggerIActivityComponent;
+import com.example.tae.wger.DI.component.IActivityComponent;
+import com.example.tae.wger.DI.module.ActivityModule;
+import com.example.tae.wger.MyApplication;
 import com.example.tae.wger.R;
 import com.example.tae.wger.adapters.ExerciseAdapter;
 import com.example.tae.wger.listener.ExerciseRecyclerViewClickListener;
 import com.example.tae.wger.model.ExerciseModel;
-import com.example.tae.wger.network.AppDataManager;
+import com.example.tae.wger.ui.base.BaseFragment;
 import com.example.tae.wger.ui.exercise.ExerciseListPresenter;
 import com.example.tae.wger.ui.exercise.IExerciseListMvpView;
-import com.example.tae.wger.ui.utils.rx.AppSchedulerProvider;
 
-import io.reactivex.disposables.CompositeDisposable;
+import javax.inject.Inject;
+
+import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
  * Created by TAE on 19/10/2017.
  */
 
-public class ExerciseFragment extends Fragment implements IExerciseListMvpView {
+public class ExerciseFragment extends BaseFragment implements IExerciseListMvpView {
+    @Inject
     ExerciseListPresenter<IExerciseListMvpView> exerciseListPresenter;
+    IActivityComponent iActivityComponent;
+
+    public IActivityComponent getiActivityComponent() {
+        return iActivityComponent;
+    }
     RecyclerView recyclerView;
     Integer equipmentId;
     @Override
@@ -45,7 +56,8 @@ public class ExerciseFragment extends Fragment implements IExerciseListMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        exerciseListPresenter = new ExerciseListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
+        initialiseDagger();
+       // exerciseListPresenter = new ExerciseListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         exerciseListPresenter.onAttach(this);
         if (equipmentId!=null) {
             exerciseListPresenter.onViewPrepared(equipmentId);
@@ -106,5 +118,13 @@ public class ExerciseFragment extends Fragment implements IExerciseListMvpView {
     @Override
     public boolean isNetworkConnected() {
         return false;
+    }
+    private void initialiseDagger() {
+        iActivityComponent = DaggerIActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .iAppComponent(((MyApplication) getApplication()).getiApplicationComponent())
+                .build();
+
+        getiActivityComponent().inject(this);
     }
 }
