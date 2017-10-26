@@ -12,6 +12,9 @@ import com.example.tae.wger.R;
 import com.example.tae.wger.listener.MuscleRecyclerViewClickListener;
 import com.example.tae.wger.model.MuscleModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by TAE on 19/10/2017.
  */
@@ -59,10 +62,11 @@ public class MuscleAdapter extends RecyclerView.Adapter<MuscleAdapter.muscleView
     }
 
     public class muscleViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.muscle_name)
         TextView name;
         public muscleViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.muscle_name);
+            ButterKnife.bind(this,itemView);
         }
 
         public void bind(final MuscleModel.Result result, final MuscleRecyclerViewClickListener rListener) {

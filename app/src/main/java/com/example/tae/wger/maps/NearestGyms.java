@@ -7,9 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tae.wger.R;
+import com.example.tae.wger.model.GymMapModel;
+import com.example.tae.wger.network.AppDataManager;
+import com.example.tae.wger.ui.gyms.GymPresenter;
+import com.example.tae.wger.ui.gyms.IGymMvpView;
+import com.example.tae.wger.ui.utils.rx.AppSchedulerProvider;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,8 +24,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class NearestGyms extends FragmentActivity implements OnMapReadyCallback {
+import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+
+public class NearestGyms extends FragmentActivity implements OnMapReadyCallback,IGymMvpView {
+    GymPresenter<IGymMvpView> gymMvpViewGymPresenter;
    GoogleMap mMap;
     Context mContext;
     GPSTracker gps;
@@ -30,6 +40,8 @@ public class NearestGyms extends FragmentActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nearest_gyms);
         mContext = this;
+        gymMvpViewGymPresenter = new GymPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
+        gymMvpViewGymPresenter.onAttach(this);
 
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(NearestGyms.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -43,7 +55,7 @@ public class NearestGyms extends FragmentActivity implements OnMapReadyCallback 
 
               latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
-
+                gymMvpViewGymPresenter.onViewPrepared(""+latitude+","+longitude,"gym","5000","AIzaSyAe0cNvNUZBPs0oR17aXp-8sZdkBkSf5Ww");
                 // \n is for new line
                 Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             } else {
@@ -123,5 +135,47 @@ public class NearestGyms extends FragmentActivity implements OnMapReadyCallback 
                 return;
             }
         }
+    }
+
+    @Override
+    public void onFetchDataCompleted(GymMapModel gymMapModel) {
+        Log.i("onfetch","completedffffffffffffff");
+        List<GymMapModel.Result> gyms=gymMapModel.getResults();
+
+        for (int i = 0; i <gyms.size(); i++)
+        {
+
+            GymMapModel.Location loc=gyms.get(i).getGeometry().getLocation();
+            LatLng location= new LatLng(loc.getLat(),loc.getLng());
+            mMap.addMarker(new MarkerOptions()
+                    .position(location).title(gyms.get(i).getName())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void onError(String message) {
+     Log.i("errorrrrrrrrrrrrrrrrr",message);
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public boolean isNetworkConnected() {
+        return false;
     }
 }

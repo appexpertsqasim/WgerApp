@@ -4,6 +4,7 @@ package com.example.tae.wger.network;
 import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
+import com.example.tae.wger.model.GymMapModel;
 import com.example.tae.wger.model.MuscleModel;
 import com.example.tae.wger.model.WorkoutLogModel;
 import com.example.tae.wger.model.WorkoutModel;
@@ -25,4 +26,6 @@ Observable<EquipmentModel> useCaseEquipment();
     Observable<WorkoutLogModel.Result> usecaseAddWorkoutLog(int reps, String weight, String date,
                                                              int exercise,int workout, int rep, int weight_unit) ;
     Observable<ExerciseInfoModel.Result> useCaseExerciseInfo(int id);
+
+    Observable<GymMapModel> useCaseGyms(String location,String type,String radius,String key);
 }

@@ -28,6 +28,9 @@ import com.example.tae.wger.ui.workout.WorkoutListPresenter;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
@@ -42,8 +45,11 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
     public IActivityComponent getiActivityComponent() {
         return iActivityComponent;
     }
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.workout_btn)
     Button workout;
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,15 +62,13 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         initialiseDagger();
        // WorkoutListPresenter = new WorkoutListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         WorkoutListPresenter.onAttach(this);
         WorkoutListPresenter.onViewPrepared();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setHasFixedSize(true);
-        workout=(Button)view.findViewById(R.id.workout_btn);
-        refresh=(SwipeRefreshLayout)view.findViewById(R.id.refresh);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                                                  @Override
                                                  public void onRefresh() {

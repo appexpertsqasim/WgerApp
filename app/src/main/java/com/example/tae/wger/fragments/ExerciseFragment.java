@@ -26,6 +26,9 @@ import com.example.tae.wger.ui.exercise.IExerciseListMvpView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
@@ -40,6 +43,7 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
     public IActivityComponent getiActivityComponent() {
         return iActivityComponent;
     }
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     Integer equipmentId;
     @Override
@@ -56,6 +60,7 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         initialiseDagger();
        // exerciseListPresenter = new ExerciseListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         exerciseListPresenter.onAttach(this);
@@ -66,7 +71,6 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
         {
             exerciseListPresenter.onViewPrepared();
         }
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 

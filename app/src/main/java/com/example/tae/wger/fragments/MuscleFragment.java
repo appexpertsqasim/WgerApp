@@ -26,6 +26,9 @@ import com.example.tae.wger.ui.muscle.MuscleListPresenter;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
@@ -35,6 +38,7 @@ import static com.example.tae.wger.MyApplication.getApplication;
 public class MuscleFragment extends BaseFragment implements IMuscleListMvpView {
     @Inject
     MuscleListPresenter<IMuscleListMvpView> muscleListPresenter;
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     IActivityComponent iActivityComponent;
 
@@ -53,10 +57,10 @@ public class MuscleFragment extends BaseFragment implements IMuscleListMvpView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initialiseDagger();
+        ButterKnife.bind(this, view);
         //muscleListPresenter = new MuscleListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         muscleListPresenter.onAttach(this);
         muscleListPresenter.onViewPrepared();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 

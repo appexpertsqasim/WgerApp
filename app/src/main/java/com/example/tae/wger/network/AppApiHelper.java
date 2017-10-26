@@ -6,10 +6,12 @@ import android.util.Log;
 import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
+import com.example.tae.wger.model.GymMapModel;
 import com.example.tae.wger.model.MuscleModel;
 import com.example.tae.wger.model.WorkoutLogModel;
 import com.example.tae.wger.model.WorkoutModel;
 import com.example.tae.wger.services.ConnectionService;
+import com.example.tae.wger.services.MapReqInterface;
 import com.example.tae.wger.services.reqInterface;
 
 import javax.inject.Inject;
@@ -23,9 +25,11 @@ import io.reactivex.Observable;
 @Singleton
 public class AppApiHelper implements ApiHelper {
     reqInterface reqInterface;
+    MapReqInterface mapReqInterface;
     @Inject
     public AppApiHelper() {
         this.reqInterface = ConnectionService.getConnectionService();
+        this.mapReqInterface=ConnectionService.getConnectionServiceMap();
     }
 
 
@@ -75,6 +79,12 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<ExerciseInfoModel.Result> useCaseExerciseInfo(int id) {
         return reqInterface.getExerciseInfo(id);
+    }
+
+    @Override
+    public Observable<GymMapModel> useCaseGyms(String location,String type,String radius,String key) {
+        Log.i("Called","app api helper");
+        return mapReqInterface.getNearestGyms(location,type,radius,key);
     }
 }
 

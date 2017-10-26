@@ -34,6 +34,9 @@ import java.io.InputStream;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.tae.wger.MyApplication.getApplication;
 
 /**
@@ -44,8 +47,22 @@ public class ExerciseInfoFragment extends BaseFragment implements IExerciseInfoL
     @Inject
     ExerciseInfoListPresenter<IExerciseInfoListMvpView> exerciseInfoListPresenter;
     Integer exerciseId;
-    TextView category,description,name,equipment;
-    ImageView svg_front_muscle,svg_front,svg_back,svg_back_muscle;
+    @BindView(R.id.category_tv)
+    TextView category;
+    @BindView(R.id.description_text)
+    TextView description;
+    @BindView(R.id.name_tv)
+    TextView name;
+    @BindView(R.id.equipment_text)
+    TextView equipment;
+    @BindView(R.id.svg_muscle)
+    ImageView svg_front_muscle;
+    @BindView(R.id.svg_muscle_iv)
+    ImageView svg_front;
+    @BindView(R.id.secondary_iv)
+    ImageView svg_back;
+    @BindView(R.id.seconday_muscle_iv)
+    ImageView svg_back_muscle;
     IActivityComponent iActivityComponent;
 
     public IActivityComponent getiActivityComponent() {
@@ -65,20 +82,10 @@ public class ExerciseInfoFragment extends BaseFragment implements IExerciseInfoL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initialiseDagger();
+        ButterKnife.bind(this, view);
        // exerciseInfoListPresenter = new ExerciseInfoListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         exerciseInfoListPresenter.onAttach(this);
         exerciseInfoListPresenter.onViewPrepared(exerciseId);
-        category=(TextView)view.findViewById(R.id.category_tv);
-        name=(TextView)view.findViewById(R.id.name_tv);
-        description=(TextView)view.findViewById(R.id.description_text);
-        equipment=(TextView)view.findViewById(R.id.equipment_text);
-        svg_front =(ImageView)view.findViewById(R.id.svg_muscle);
-       svg_front_muscle =(ImageView)view.findViewById(R.id.svg_muscle_iv);
-       svg_back =(ImageView)view.findViewById(R.id.secondary_iv);
-        svg_back_muscle =(ImageView)view.findViewById(R.id.seconday_muscle_iv);
-
-
-
 
     }
     @Override

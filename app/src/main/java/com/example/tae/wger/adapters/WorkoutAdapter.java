@@ -11,6 +11,9 @@ import com.example.tae.wger.R;
 import com.example.tae.wger.listener.WorkoutRecyclerViewClickListener;
 import com.example.tae.wger.model.WorkoutModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by TAE on 19/10/2017.
  */
@@ -52,10 +55,11 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.workoutV
     }
 
     public class workoutViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.workout_tv)
         TextView name;
         public workoutViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.workout_tv);
+            ButterKnife.bind(this,itemView);
         }
 
         public void bind(final WorkoutModel.Result result, final WorkoutRecyclerViewClickListener rListener) {

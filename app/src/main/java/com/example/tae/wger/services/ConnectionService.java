@@ -27,7 +27,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
             return retrofit.create(reqInterface.class);
         }
+    public static MapReqInterface getConnectionServiceMap(){
 
+        retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstants.BASE_URL_MAP)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        return retrofit.create(MapReqInterface.class);
+    }
 
    }
 

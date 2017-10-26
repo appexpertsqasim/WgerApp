@@ -4,6 +4,7 @@ package com.example.tae.wger.network;
 import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
+import com.example.tae.wger.model.GymMapModel;
 import com.example.tae.wger.model.MuscleModel;
 import com.example.tae.wger.model.WorkoutLogModel;
 import com.example.tae.wger.model.WorkoutModel;
@@ -63,6 +64,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ExerciseInfoModel.Result> useCaseExerciseInfo(int id) {
         return apiHelper.useCaseExerciseInfo(id);
+    }
+
+    @Override
+    public Observable<GymMapModel> useCaseGyms(String location,String type,String radius,String key) {
+        return apiHelper.useCaseGyms(location,type,radius,key);
     }
 
 

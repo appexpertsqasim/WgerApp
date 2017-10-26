@@ -60,7 +60,7 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
         initialiseDagger();
-//        equipmentListPresenter = new EquipmentListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
+//        equipmentListPresenter = new GymPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         equipmentListPresenter.onAttach(this);
         equipmentListPresenter.onViewPrepared();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
