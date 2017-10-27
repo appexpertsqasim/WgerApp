@@ -7,6 +7,9 @@ import com.example.tae.wger.DI.component.DaggerIAppComponent;
 import com.example.tae.wger.DI.component.IAppComponent;
 import com.example.tae.wger.DI.module.ApplicationModule;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 public class MyApplication extends Application {
 
@@ -35,6 +38,14 @@ public class MyApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         getIappComponent().inject(this);
+        Realm.init(getApplicationContext());
+        RealmConfiguration realmConfiguration= new RealmConfiguration.Builder()
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
 
     }
 

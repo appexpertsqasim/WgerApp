@@ -50,12 +50,11 @@ public class MuscleFragment extends BaseFragment implements IMuscleListMvpView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.recycler_view_layout,container, false);
+        return inflater.inflate(R.layout.muscle_recycler_view_layout,container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initialiseDagger();
         ButterKnife.bind(this, view);
         //muscleListPresenter = new MuscleListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
@@ -63,6 +62,7 @@ public class MuscleFragment extends BaseFragment implements IMuscleListMvpView {
         muscleListPresenter.onViewPrepared();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+        super.onViewCreated(view, savedInstanceState);
 
 
     }

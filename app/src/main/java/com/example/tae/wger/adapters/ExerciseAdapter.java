@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tae.wger.R;
@@ -39,7 +38,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.exerci
 
     @Override
     public exerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(row, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(row, parent,false);
         Log.i("view Holder","passseddd");
         return new exerciseViewHolder(view);
 
@@ -66,8 +65,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.exerci
     public class exerciseViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.exercise_name)
         TextView name;
-        @BindView(R.id.exercise_iv)
-        ImageView imgExercise;
         public exerciseViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

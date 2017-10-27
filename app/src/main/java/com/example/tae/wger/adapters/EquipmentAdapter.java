@@ -2,10 +2,10 @@ package com.example.tae.wger.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tae.wger.R;
@@ -27,6 +27,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equi
     Context applicationContext;
     EquipmentRecyclerViewClickListener rListener;
 
+
     public EquipmentAdapter(EquipmentModel equipment, int row, Context applicationContext, EquipmentRecyclerViewClickListener listener) {
         this.equipment = equipment;
         this.row = row;
@@ -46,19 +47,29 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equi
     public void onBindViewHolder(equipmentViewHolder holder, int position) {
         holder.bind(equipment.getResults().get(position), rListener);
         holder.name.setText(equipment.getResults().get(position).getName());
-        Log.i("Model teset",equipment.getResults().get(position).getName());
-
-
+//        holder.image.setImageDrawable(GetImage(applicationContext,equipment.getResults().get(position).getName().toLowerCase()));
+//        Log.i("Model teset",equipment.getResults().get(position).getName());
+//
+//
 
     }
     @Override
     public int getItemCount() {
         return equipment.getResults().size();
     }
+//    public static Drawable GetImage(Context c, String ImageName) {
+//        if (c.getResources() != null) {
+//            return c.getResources().getDrawable(c.getResources().getIdentifier(ImageName, "drawable", c.getPackageName()));
+//        } else {
+//           return c.getResources().getDrawable(c.getResources().getIdentifier("dumbell_image", "drawable", c.getPackageName()));
+//        }
+//    }
 
     public class equipmentViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.equipment_tv)
         TextView name;
+        @BindView(R.id.equipment_iv)
+        ImageView image;
         public equipmentViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

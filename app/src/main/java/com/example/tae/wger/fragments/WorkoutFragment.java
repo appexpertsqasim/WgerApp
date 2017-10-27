@@ -61,7 +61,6 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         initialiseDagger();
        // WorkoutListPresenter = new WorkoutListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
@@ -83,7 +82,7 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
                 WorkoutListPresenter.onViewPrepared("Created in android studio");
             }
         });
-
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override

@@ -37,7 +37,7 @@ public interface reqInterface {
     Observable<WorkoutLogModel.Result> addWorkoutLog(@Field("reps") int reps,
                                                   @Field("weight") String weight,
                                                   @Field("date") String date,
-                                                  @Field("exercise") int exercise,
+                                                  @Field("exercise2") int exercise,
                                                   @Field("workout") int workout,
                                                   @Field("repetition_unit") int rep,
                                                   @Field("weight_unit") int weight_unit)          ;

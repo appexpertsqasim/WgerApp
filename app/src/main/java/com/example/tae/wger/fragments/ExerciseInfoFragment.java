@@ -55,9 +55,9 @@ public class ExerciseInfoFragment extends BaseFragment implements IExerciseInfoL
     TextView name;
     @BindView(R.id.equipment_text)
     TextView equipment;
-    @BindView(R.id.svg_muscle)
-    ImageView svg_front_muscle;
     @BindView(R.id.svg_muscle_iv)
+    ImageView svg_front_muscle;
+    @BindView(R.id.svg_muscle)
     ImageView svg_front;
     @BindView(R.id.secondary_iv)
     ImageView svg_back;
@@ -73,19 +73,19 @@ public class ExerciseInfoFragment extends BaseFragment implements IExerciseInfoL
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          exerciseId = getArguments().getInt("CID");
-        Log.i("exercise id", exerciseId.toString());
+        Log.i("exercise2 id", exerciseId.toString());
         return inflater.inflate(R.layout.exercise_info_layout,container, false);
 
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initialiseDagger();
         ButterKnife.bind(this, view);
        // exerciseInfoListPresenter = new ExerciseInfoListPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         exerciseInfoListPresenter.onAttach(this);
         exerciseInfoListPresenter.onViewPrepared(exerciseId);
+        super.onViewCreated(view, savedInstanceState);
 
     }
     @Override

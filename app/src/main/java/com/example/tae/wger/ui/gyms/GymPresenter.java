@@ -1,10 +1,10 @@
-package com.example.tae.wger.ui.exercise_info;
+package com.example.tae.wger.ui.gyms;
 
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.tae.wger.model.ExerciseInfoModel;
+import com.example.tae.wger.model.GymMapModel;
 import com.example.tae.wger.network.DataManager;
 import com.example.tae.wger.ui.base.BasePresenter;
 import com.example.tae.wger.ui.utils.rx.SchedulerProvider;
@@ -15,27 +15,27 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
 /**
- * Created by TAE on 19/10/2017.
+ * Created by TAE on 26/10/2017.
  */
 
-public class ExerciseInfoListPresenter<V extends IExerciseInfoListMvpView> extends BasePresenter<V> implements IExerciseInfoListMvpPresenter<V> {
+public class GymPresenter<V extends IGymMvpView> extends BasePresenter<V> implements IGymMvpPresenter<V> {
 
     @Inject
-    public ExerciseInfoListPresenter(DataManager dataManager, SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable) {
+    public GymPresenter(DataManager dataManager, SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }
 
     @Override
-    public void onViewPrepared(int id) {
-        Log.i("On View Prepared exercise2 info","called" );
+    public void onViewPrepared(String location,String type,String radius,String key) {
+        Log.i("On View Prepared","called" );
         getCompositeDisposable()
-                .add(getDataManager().useCaseExerciseInfo(id)
+                .add(getDataManager().useCaseGyms(location,type,radius,key)
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
-                        .subscribe(new Consumer<ExerciseInfoModel.Result>() {
+                        .subscribe(new Consumer<GymMapModel>() {
                                        @Override
-                                       public void accept(@NonNull ExerciseInfoModel.Result exerciseInfoModel) throws Exception {
-                                           getMvpView().onFetchDataCompleted(exerciseInfoModel);
+                                       public void accept(@NonNull GymMapModel gymMapModel) throws Exception {
+                                           getMvpView().onFetchDataCompleted(gymMapModel);
                                        }
                                    },
                                 new Consumer<Throwable>() {

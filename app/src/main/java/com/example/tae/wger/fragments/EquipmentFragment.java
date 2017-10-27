@@ -1,5 +1,8 @@
 package com.example.tae.wger.fragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,9 @@ import android.view.ViewGroup;
 import com.example.tae.wger.DI.component.DaggerIActivityComponent;
 import com.example.tae.wger.DI.component.IActivityComponent;
 import com.example.tae.wger.DI.module.ActivityModule;
+import com.example.tae.wger.LocalDB.realm_controller.RealmController;
+import com.example.tae.wger.LocalDB.realm_adapters.RealmEquipmentAdopter;
+import com.example.tae.wger.LocalDB.realm_models.RealmEquipmentModel;
 import com.example.tae.wger.MyApplication;
 import com.example.tae.wger.R;
 import com.example.tae.wger.adapters.EquipmentAdapter;
@@ -28,6 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 import static com.example.tae.wger.MyApplication.getApplication;
 
@@ -42,6 +49,9 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     IActivityComponent iActivityComponent;
+    Realm realm;
+    RealmController controller;
+    RealmEquipmentModel realmEquipmentModel;
 
     public IActivityComponent getiActivityComponent() {
         return iActivityComponent;
@@ -52,27 +62,37 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.recycler_view_layout, container, false);
+        return inflater.inflate(R.layout.equipment_recycler_view_layout, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+
         ButterKnife.bind(this,view);
+        Realm.init(getActivity().getApplicationContext());
+        realm=Realm.getDefaultInstance();
+        controller=new RealmController(realm);
         initialiseDagger();
+        isNetworkConnected();
 //        equipmentListPresenter = new GymPresenter<>(new AppDataManager(), new AppSchedulerProvider(), new CompositeDisposable());
         equipmentListPresenter.onAttach(this);
         equipmentListPresenter.onViewPrepared();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-
+        super.onViewCreated(view, savedInstanceState);
 
     }
 
     @Override
     public void onFetchDataCompleted(EquipmentModel equipmentModel) {
         Log.i("OnFetchCalled", "passseddd");
-
+        for(EquipmentModel.Result result: equipmentModel.getResults()) {
+            String name = result.getName();
+            realmEquipmentModel =new RealmEquipmentModel();
+            realmEquipmentModel.setName(name);
+            controller.saveEquipment(realmEquipmentModel);
+            Log.i("Testing realm",realmEquipmentModel.getName());
+        }
         recyclerView.setAdapter(new EquipmentAdapter(equipmentModel, R.layout.equipment_list_item, getActivity().getApplicationContext(), new EquipmentRecyclerViewClickListener() {
             @Override
             public void onItemClick(EquipmentModel.Result item) {
@@ -111,9 +131,22 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
 
     }
 
-    @Override
+
     public boolean isNetworkConnected() {
-        return false;
+
+
+        // get Connectivity Manager to get network status
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            Log.i("Connection test","passed");
+            return true; //we have a connection
+        } else {
+            recyclerView.setAdapter(new RealmEquipmentAdopter(controller.getEquipmentLists(), R.layout.equipment_list_item, getActivity().getApplicationContext()));
+            return false; // no connection!
+        }
     }
 
 
@@ -125,4 +158,5 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
 
         getiActivityComponent().inject(this);
     }
+
 }

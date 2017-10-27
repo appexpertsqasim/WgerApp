@@ -104,9 +104,9 @@ FragmentManager fragmentManager;
             fragmentManager.beginTransaction().replace(R.id.container,new WorkoutFragment())
                     .commit();
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
 
         }
 

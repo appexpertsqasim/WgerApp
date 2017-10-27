@@ -54,7 +54,7 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
             equipmentId = getArguments().getInt("CID");
         }
 
-        return inflater.inflate(R.layout.recycler_view_layout,container, false);
+        return inflater.inflate(R.layout.exercise_recycler_view_layout,container, false);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
             exerciseListPresenter.onViewPrepared();
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        super.onViewCreated(view, savedInstanceState);
 
     }
     @Override
@@ -88,7 +88,7 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
                 FragmentTransaction ft=fm.beginTransaction();
                 Bundle args = new Bundle();
                 args.putInt("CID", cid);
-                Log.i("exercise id", cid.toString());
+                Log.i("exercise2 id", cid.toString());
                 fr.setArguments(args);
                 ft.replace(R.id.container, fr);
                 ft.commit();
