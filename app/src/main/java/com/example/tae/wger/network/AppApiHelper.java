@@ -4,6 +4,7 @@ package com.example.tae.wger.network;
 import android.util.Log;
 
 import com.example.tae.wger.model.EquipmentModel;
+import com.example.tae.wger.model.ExerciseImageModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.GymMapModel;
@@ -48,6 +49,24 @@ public class AppApiHelper implements ApiHelper {
     public Observable<ExerciseModel> useCaseExercise() {
         return reqInterface.getExercise();
     }
+
+    @Override
+    public Observable<ExerciseImageModel> useCaseExerciseImage() {
+        return reqInterface.getExerciseImages();
+    }
+
+
+    @Override
+    public Observable<ExerciseModel> useCaseExercisePage(String page) {
+        Log.i("page called", "success");
+        return reqInterface.getExercisePage(page);
+    }
+
+    @Override
+    public Observable<ExerciseImageModel> useCaseExerciseImagePage(String page) {
+        return reqInterface.getExerciseImagePage(page);
+    }
+
 
     @Override
     public Observable<WorkoutModel> useCaseworkout() {

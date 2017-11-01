@@ -32,14 +32,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.exerci
         this.row = row;
         this.applicationContext = applicationContext;
         this.rListener=listener;
-        Log.i("adapter", "callled");
     }
 
 
     @Override
     public exerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(row, parent,false);
-        Log.i("view Holder","passseddd");
         return new exerciseViewHolder(view);
 
     }

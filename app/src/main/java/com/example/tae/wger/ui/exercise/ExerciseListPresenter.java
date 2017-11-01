@@ -45,7 +45,8 @@ public class ExerciseListPresenter<V extends IExerciseListMvpView> extends BaseP
                                     }
                                 }));
 
-    }
+   }
+
     @Override
     public void onViewPrepared() {
         Log.i("On View Prepared","called" );
@@ -68,4 +69,84 @@ public class ExerciseListPresenter<V extends IExerciseListMvpView> extends BaseP
 
     }
 
+    @Override
+    public void onViewPreparedPage(String page) {
+        Log.i("On View Prepared","called" );
+        getCompositeDisposable()
+                .add(getDataManager().useCaseExercisePage(page)
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribe(new Consumer<ExerciseModel>() {
+                                       @Override
+                                       public void accept(@NonNull ExerciseModel exerciseModel) throws Exception {
+                                           getMvpView().onFetchDataCompletedNext(exerciseModel);
+                                       }
+                                   },
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(@NonNull Throwable throwable) throws Exception {
+                                        getMvpView().onError(throwable.getMessage());
+                                    }
+                                }));
+
+    }
+//    @Override
+//    public void onViewPreparedPage(String page,String iPage) {
+//        Observable.zip(getDataManager().useCaseExercisePage(page), getDataManager().useCaseExerciseImagePage(iPage),
+//                new BiFunction<ExerciseModel, ExerciseImageModel, ZipModel>() {
+//
+//
+//                    @Override
+//                    public ZipModel apply(ExerciseModel exerciseModel, ExerciseImageModel exerciseImageModel) throws Exception {
+//                       return new ZipModel(exerciseModel,exerciseImageModel);
+//                    }
+//                })
+//                // Run on a background thread
+//                .subscribeOn(Schedulers.io())
+//                // Be notified on the main thread
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ZipModel>() {
+//                               @Override
+//                               public void accept(ZipModel zipModel) throws Exception {
+//                                   getMvpView().onFetchDataCompletedNext(zipModel);
+//                               }
+//                           },
+//                        new Consumer<Throwable>() {
+//                            @Override
+//                            public void accept(@NonNull Throwable throwable) throws Exception {
+//                                getMvpView().onError(throwable.getMessage());
+//                            }
+//                        });
+//    }
+//
+//
+//
+//    @Override
+//    public void onViewPreparedZip() {
+//        Observable.zip(getDataManager().useCaseExerciseImage(), getDataManager().useCaseExercise(),
+//                new BiFunction<ExerciseImageModel, ExerciseModel, ZipModel>() {
+//
+//                    @Override
+//                    public ZipModel apply(ExerciseImageModel exerciseImageModel, ExerciseModel exerciseModel) throws Exception {
+//
+//                        return new ZipModel(exerciseModel,exerciseImageModel);
+//                    }
+//                })
+//                // Run on a background thread
+//                .subscribeOn(Schedulers.io())
+//                // Be notified on the main thread
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ZipModel>() {
+//                    @Override
+//                    public void accept(ZipModel zipModel) throws Exception {
+//                        getMvpView().onFetchDataCompletedZip(zipModel);
+//                    }
+//                           },
+//                        new Consumer<Throwable>() {
+//                            @Override
+//                            public void accept(@NonNull Throwable throwable) throws Exception {
+//                                getMvpView().onError(throwable.getMessage());
+//                            }
+//                        });
+//    }
 }

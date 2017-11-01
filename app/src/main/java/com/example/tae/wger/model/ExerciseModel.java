@@ -59,6 +59,7 @@ public class ExerciseModel {
 
 public class Result {
 
+
     @SerializedName("id")
     @Expose
     private Integer id;

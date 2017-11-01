@@ -10,6 +10,7 @@ public class ApiConstants {
     public static final String Equipment="equipment";
     public static final String Workout="workout/";
     public static final String WorkoutLog="workoutlog/";
+    public static final String ExerciseImages="exerciseimage/";
     public static final String Exercise="exercise/";
     public static final String Muscle="muscle/";
     public static final String ExerciseInfo="exerciseinfo/{id}";

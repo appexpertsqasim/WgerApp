@@ -10,4 +10,8 @@ import com.example.tae.wger.ui.base.MvpView;
 
 public interface IExerciseListMvpView extends MvpView {
     void onFetchDataCompleted(ExerciseModel exerciseModel);
+//    void onFetchDataCompletedNext(ZipModel zipMode);
+//    void onFetchDataCompletedZip(ZipModel zipModel);
+void onFetchDataCompletedNext(ExerciseModel exerciseModel);
+
 }

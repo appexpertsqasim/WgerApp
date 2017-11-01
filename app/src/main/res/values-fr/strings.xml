@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wger</string>
+
+    <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
+
+    <string name="action_settings">
+Paramètres</string>
+    <!--App Message-->
+    <string name="api_retry_error">
+Merci de réessayer!</string>
+    <string name="api_default_error">Something wrong happened!</string>
+    <string name="some_error">Quelque chose de mal est arrivé!</string>
+    <string name="connection_error">
+Connexion Internet perdue!</string>
+    <string name="main_muscles">Muscles principaux</string>
+    <string name="secondary_muscles">Muscles secondaires</string>
+    <string name="muscles_info">
+Le diagramme montre les muscles les plus utilisés sur cet exercice</string>
+    <string name="GPSAlertDialogMessage">
+Trouver l emplacement actuel</string>
+    <string name="cancel">
+processus annulé</string>
+    <string name="GPSAlertDialogTitle">
+s\'il vous plaît vérifier vos paramètres de localisation</string>
+    <string name="title_activity_nearest_gyms">Map</string>
+    <string name="equipment">Équipement</string>
+    <string name="exercises">Des exercices</string>
+    <string name="muscles">Muscles</string>
+    <string name="workout">Faire des exercices</string>
+    <string name="muscles_trained">Muscles formés</string>
+    <string name="workout_log">Journal d entraînement</string>
+    <string name="save">sauvegarder</string>
+    <string name="enter_weight_unit">Entrer lunité de poids</string>
+    <string name="enter_rep_unit">Entrer l unité de rep</string>
+    <string name="weight_unit">Unité de poids</string>
+    <string name="repetetion_unit">Unité de répétition</string>
+    <string name="enter_exercise_name">Entrez le nom de l exercice</string>
+    <string name="weight">Poids</string>
+    <string name="enter_weight_for_exercise">Entrez le poids pour l exercice</string>
+    <string name="enter_reps_for_exercise">Entrez des représentants pour l exercice</string>
+    <string name="reps">Représentants</string>
+    <string name="name">prénom</string>
+    <string name="category">Category</string>
+    <string name="muscles_text">Muscles</string>
+    <string name="equipment_text">Équipement</string>
+    <string name="add_new_workout">Ajouter une nouvelle séance d entraînement</string>
+    <string name="next">Prochain</string>
+    <string name="back">Arrière</string>
+
+</resources>

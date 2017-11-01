@@ -2,6 +2,7 @@ package com.example.tae.wger.services;
 
 
 import com.example.tae.wger.model.EquipmentModel;
+import com.example.tae.wger.model.ExerciseImageModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.MuscleModel;
@@ -57,10 +58,17 @@ public interface reqInterface {
     Observable<ExerciseModel> getExercise(@Query("equipment") int id);
     @GET(ApiConstants.Exercise)
     Observable<ExerciseModel> getExercise();
+    @GET(ApiConstants.Exercise)
+    Observable<ExerciseImageModel> getExerciseImages();
+    @GET(ApiConstants.Exercise)
+    Observable<ExerciseModel> getExercisePage(@Query("page")String page);
+    @GET(ApiConstants.ExerciseImages)
+    Observable<ExerciseImageModel> getExerciseImagePage(@Query("page")String page);
     @GET(ApiConstants.Muscle)
     Observable<MuscleModel> getMuscle();
     @GET(ApiConstants.ExerciseInfo)
     Observable<ExerciseInfoModel.Result> getExerciseInfo(@Path("id") int id);
+
 
 
 }

@@ -38,7 +38,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equi
 
     @Override
     public equipmentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(row, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(row, parent,false);
         return new equipmentViewHolder(view);
 
     }

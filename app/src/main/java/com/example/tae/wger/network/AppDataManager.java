@@ -2,6 +2,7 @@ package com.example.tae.wger.network;
 
 
 import com.example.tae.wger.model.EquipmentModel;
+import com.example.tae.wger.model.ExerciseImageModel;
 import com.example.tae.wger.model.ExerciseInfoModel;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.GymMapModel;
@@ -34,6 +35,21 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<ExerciseModel> useCaseExercise() {
         return apiHelper.useCaseExercise();
+    }
+
+    @Override
+    public Observable<ExerciseImageModel> useCaseExerciseImage() {
+        return apiHelper.useCaseExerciseImage();
+    }
+
+    @Override
+    public Observable<ExerciseModel> useCaseExercisePage(String page) {
+        return apiHelper.useCaseExercisePage(page);
+    }
+
+    @Override
+    public Observable<ExerciseImageModel> useCaseExerciseImagePage(String page) {
+        return apiHelper.useCaseExerciseImagePage(page);
     }
 
     @Override

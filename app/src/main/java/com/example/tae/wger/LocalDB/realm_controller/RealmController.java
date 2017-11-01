@@ -1,6 +1,8 @@
 package com.example.tae.wger.LocalDB.realm_controller;
 
 import com.example.tae.wger.LocalDB.realm_models.RealmEquipmentModel;
+import com.example.tae.wger.LocalDB.realm_models.RealmExerciseInfoModel;
+import com.example.tae.wger.LocalDB.realm_models.RealmExerciseModel;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,20 @@ public class RealmController {
             }
         });
     }
+    public void saveExerciseInfo(RealmExerciseInfoModel realmExerciseInfoModel) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(realmExerciseInfoModel);
+            }
+        });
+    }
+    public RealmExerciseInfoModel getOneItem(int id){
+
+        RealmExerciseInfoModel item = realm.where(RealmExerciseInfoModel.class).equalTo("id",id).findFirst();
+
+        return item;
+    }
     public ArrayList<RealmEquipmentModel> getEquipmentLists(){
         ArrayList<RealmEquipmentModel> realmEquipmentModelArraylist =new ArrayList<>();
         RealmResults<RealmEquipmentModel> realmResults=realm.where(RealmEquipmentModel.class).findAll();
@@ -35,4 +51,31 @@ public class RealmController {
         }
         return realmEquipmentModelArraylist;
     }
+    public void saveExercise(final RealmExerciseModel exerciseModel) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(exerciseModel);
+            }
+        });
+    }
+
+    public void deleteDatabase() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.deleteAll();
+            }
+        });
+    }
+
+    public ArrayList<RealmExerciseModel> getExerciseLists(){
+        ArrayList<RealmExerciseModel> realmExerciseModelArraylist =new ArrayList<>();
+        RealmResults<RealmExerciseModel> realmResults=realm.where(RealmExerciseModel.class).findAll();
+        for (RealmExerciseModel realmExerciseModel : realmResults){
+            realmExerciseModelArraylist.add(realmExerciseModel);
+        }
+        return realmExerciseModelArraylist;
+    }
+
 }

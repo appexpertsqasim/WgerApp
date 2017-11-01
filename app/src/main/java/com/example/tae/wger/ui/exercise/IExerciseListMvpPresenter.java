@@ -10,4 +10,7 @@ import com.example.tae.wger.ui.base.MvpPresenter;
 public interface IExerciseListMvpPresenter<V extends IExerciseListMvpView> extends MvpPresenter<V> {
     void onViewPrepared(int id);
     void onViewPrepared();
+    void onViewPreparedPage(String page);
+//    void onViewPreparedZip();
+
 }

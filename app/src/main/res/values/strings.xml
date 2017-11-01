@@ -17,5 +17,29 @@
     <string name="cancel">process cancelled</string>
     <string name="GPSAlertDialogTitle">please check your location settings</string>
     <string name="title_activity_nearest_gyms">Map</string>
+    <string name="equipment">Equipment</string>
+    <string name="exercises">Exercises</string>
+    <string name="muscles">Muscles</string>
+    <string name="workout">Workout</string>
+    <string name="muscles_trained">Muscles Trained</string>
+    <string name="workout_log">Workout Log</string>
+    <string name="save">Save</string>
+    <string name="enter_weight_unit">Enter weight unit</string>
+    <string name="enter_rep_unit">Enter rep unit</string>
+    <string name="weight_unit">Weight Unit</string>
+    <string name="repetetion_unit">Repetetion Unit</string>
+    <string name="enter_exercise_name">Enter exercise name</string>
+    <string name="weight">Weight</string>
+    <string name="enter_weight_for_exercise">Enter Weight for exercise</string>
+    <string name="enter_reps_for_exercise">Enter reps for exercise</string>
+    <string name="reps">Reps</string>
+    <string name="name">Name</string>
+    <string name="category">Category</string>
+    <string name="descripton">Descripton</string>
+    <string name="muscles_text">Muscles</string>
+    <string name="equipment_text">Equipment</string>
+    <string name="add_new_workout">Add New Workout</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
 
 </resources>

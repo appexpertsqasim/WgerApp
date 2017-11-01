@@ -3,21 +3,24 @@ package com.example.tae.wger.LocalDB.realm_models;
 import io.realm.RealmObject;
 
 /**
- * Created by TAE Consultant on 27/10/2017.
+ * Created by TAE on 31/10/2017.
  */
 
-public class RealmEquipmentModel extends RealmObject {
-    public RealmEquipmentModel(Integer id,String name) {
 
-        this.name = name;
-        this.id=id;
-    }
+public class Category extends RealmObject {
 
-    public RealmEquipmentModel() {
-    }
 
     private Integer id;
+
     private String name;
+
+    public Category(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Category() {
+    }
 
     public Integer getId() {
         return id;
@@ -36,3 +39,5 @@ public class RealmEquipmentModel extends RealmObject {
     }
 
 }
+
+

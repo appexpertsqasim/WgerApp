@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_fitness_center_black_24dp"
-            android:title="Equipment" />
+            android:title="@string/equipment" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/exercise2"
-            android:title="Exercises" />
+            android:title="@string/exercises" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/muscles"
-            android:title="Muscles" />
+            android:title="@string/muscles" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/workout"
-            android:title="Workout" />
+            android:title="@string/workout" />
     </group>
 
     <!--<item android:title="Communicate">-->

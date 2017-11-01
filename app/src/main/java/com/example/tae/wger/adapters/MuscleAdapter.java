@@ -38,7 +38,7 @@ public class MuscleAdapter extends RecyclerView.Adapter<MuscleAdapter.muscleView
 
     @Override
     public muscleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(row, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(row, parent,false);
         Log.i("view Holder","passseddd");
         return new muscleViewHolder(view);
 

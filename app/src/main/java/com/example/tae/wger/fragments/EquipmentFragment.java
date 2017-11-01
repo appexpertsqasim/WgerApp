@@ -18,13 +18,14 @@ import android.view.ViewGroup;
 import com.example.tae.wger.DI.component.DaggerIActivityComponent;
 import com.example.tae.wger.DI.component.IActivityComponent;
 import com.example.tae.wger.DI.module.ActivityModule;
-import com.example.tae.wger.LocalDB.realm_controller.RealmController;
 import com.example.tae.wger.LocalDB.realm_adapters.RealmEquipmentAdopter;
+import com.example.tae.wger.LocalDB.realm_controller.RealmController;
 import com.example.tae.wger.LocalDB.realm_models.RealmEquipmentModel;
 import com.example.tae.wger.MyApplication;
 import com.example.tae.wger.R;
 import com.example.tae.wger.adapters.EquipmentAdapter;
 import com.example.tae.wger.listener.EquipmentRecyclerViewClickListener;
+import com.example.tae.wger.listener.RealmEquipmentRecyclerViewClickListener;
 import com.example.tae.wger.model.EquipmentModel;
 import com.example.tae.wger.ui.base.BaseFragment;
 import com.example.tae.wger.ui.equipment.EquipmentListPresenter;
@@ -88,8 +89,10 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
         Log.i("OnFetchCalled", "passseddd");
         for(EquipmentModel.Result result: equipmentModel.getResults()) {
             String name = result.getName();
+            Integer id = result.getId();
             realmEquipmentModel =new RealmEquipmentModel();
             realmEquipmentModel.setName(name);
+            realmEquipmentModel.setId(id);
             controller.saveEquipment(realmEquipmentModel);
             Log.i("Testing realm",realmEquipmentModel.getName());
         }
@@ -105,6 +108,7 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
                 fr.setArguments(args);
                 ft.replace(R.id.container, fr);
                 ft.commit();
+                ft.addToBackStack("");
 
             }
         }));
@@ -144,10 +148,26 @@ public class EquipmentFragment extends BaseFragment implements IEquipmentListMvp
             Log.i("Connection test","passed");
             return true; //we have a connection
         } else {
-            recyclerView.setAdapter(new RealmEquipmentAdopter(controller.getEquipmentLists(), R.layout.equipment_list_item, getActivity().getApplicationContext()));
-            return false; // no connection!
-        }
-    }
+            recyclerView.setAdapter(new RealmEquipmentAdopter(controller.getEquipmentLists(), R.layout.equipment_list_item, getActivity().getApplicationContext(), new RealmEquipmentRecyclerViewClickListener() {
+                @Override
+                public void onItemClick(RealmEquipmentModel item) {
+                    Integer cid = item.getId();
+                    Fragment fr = new ExerciseFragment();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Bundle args = new Bundle();
+                    args.putInt("CID", cid);
+                    fr.setArguments(args);
+                    ft.replace(R.id.container, fr);
+                    ft.addToBackStack("");
+                    ft.commit();
+
+
+                }
+            }));
+            return false;
+        }}
+
 
 
     private void initialiseDagger() {
