@@ -44,7 +44,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.workoutV
     @Override
     public void onBindViewHolder(workoutViewHolder holder, int position) {
         holder.bind(workout.getResults().get(position), rListener);
-        holder.name.setText(workout.getResults().get(position).getId()+"--" +workout.getResults().get(position).getCreationDate());
+        holder.name.setText(""+workout.getResults().get(position).getComment().toString()+"-" +workout.getResults().get(position).getCreationDate());
 
 
 

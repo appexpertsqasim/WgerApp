@@ -81,6 +81,7 @@ public class MuscleFragment extends BaseFragment implements IMuscleListMvpView {
                 args.putInt("CID", cid);
                 fr.setArguments(args);
                 ft.replace(R.id.container, fr);
+                ft.addToBackStack("");
                 ft.commit();
 
             }

@@ -6,14 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tae.wger.R;
 import com.example.tae.wger.listener.ExerciseRecyclerViewClickListener;
 import com.example.tae.wger.model.ExerciseModel;
 import com.example.tae.wger.model.ZipModel;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,11 +67,11 @@ public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.zipViewHolder>{
 
                 } else {
                     //do something for equals
-                    Log.i("id1 "+exercise, "id2 " + exerciseId);
-                    Picasso.with(applicationContext)
-                            .load(zipModel.imageModel.getResults().get(j).getImage())
-                            .resize(120, 120)
-                            .into(holder.image);
+//                    Log.i("id1 "+exercise, "id2 " + exerciseId);
+//                    Picasso.with(applicationContext)
+//                            .load(zipModel.imageModel.getResults().get(j).getImage())
+//                            .resize(120, 120)
+//                            .into(holder.image);
 
                 }
             }
@@ -89,8 +87,6 @@ public class ZipAdapter extends RecyclerView.Adapter<ZipAdapter.zipViewHolder>{
     public class zipViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.exercise_name)
         TextView name;
-        @BindView(R.id.exercise_iv)
-        ImageView image;
         public zipViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

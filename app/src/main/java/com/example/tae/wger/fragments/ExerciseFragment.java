@@ -185,6 +185,7 @@ public class ExerciseFragment extends BaseFragment implements IExerciseListMvpVi
                 args.putInt("CID", cid);
                 fr.setArguments(args);
                 ft.replace(R.id.container, fr);
+                ft.addToBackStack("");
                 ft.commit();
 
             }

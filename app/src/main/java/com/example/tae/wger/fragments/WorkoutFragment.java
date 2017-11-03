@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.tae.wger.DI.component.DaggerIActivityComponent;
 import com.example.tae.wger.DI.component.IActivityComponent;
@@ -47,6 +49,8 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
     }
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.comment_tv)
+    EditText comment;
     @BindView(R.id.workout_btn)
     Button workout;
     @BindView(R.id.refresh)
@@ -67,7 +71,6 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
         WorkoutListPresenter.onAttach(this);
         WorkoutListPresenter.onViewPrepared();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recyclerView.setHasFixedSize(true);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                                                  @Override
                                                  public void onRefresh() {
@@ -79,7 +82,24 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
         workout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WorkoutListPresenter.onViewPrepared("Created in android studio");
+                String ed_text = comment.getText().toString().trim();
+
+                if(ed_text.isEmpty() || ed_text.length() == 0 || ed_text.equals("") || ed_text == null)
+                {
+                    //EditText is empty
+
+                    Toast.makeText(getActivity(), "Enter The Name please!",
+                            Toast.LENGTH_LONG).show();
+
+                }
+                else
+                {
+                    //EditText is not empty
+                    Log.i("test","passed");
+                    WorkoutListPresenter.onViewPrepared(comment.getText().toString());
+
+                }
+
             }
         });
         super.onViewCreated(view, savedInstanceState);
@@ -107,6 +127,7 @@ public class WorkoutFragment extends BaseFragment implements IWorkoutListMvpView
                 args.putString("CID2", cDate);
                 fr.setArguments(args);
                 ft.replace(R.id.container, fr);
+                ft.addToBackStack("");
                 ft.commit();
 
             }

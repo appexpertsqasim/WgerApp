@@ -145,9 +145,13 @@ public class WorkoutLogFragment extends BaseFragment implements IWorkoutLogListM
         workout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("error","check"+reps.getText().toString()+weight.getText().toString()+
+                        workoutDate+getExerciseId(model,exercise.getText().toString())+ workoutId+
+                        rep_id+weightId);
                 WorkoutListPresenter.onViewPrepared(Integer.valueOf(reps.getText().toString()),weight.getText().toString(),
                        workoutDate,getExerciseId(model,exercise.getText().toString()), workoutId,
                         rep_id,weightId);
+
             }
         });
         muscle.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +165,7 @@ public class WorkoutLogFragment extends BaseFragment implements IWorkoutLogListM
                 args.putIntegerArrayList("CID", muscles);
                 fr.setArguments(args);
                 ft.replace(container, fr);
+                ft.addToBackStack("");
                 ft.commit();
             }
         });

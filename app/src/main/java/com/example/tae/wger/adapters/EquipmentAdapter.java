@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tae.wger.R;
@@ -68,8 +67,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.equi
     public class equipmentViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.equipment_tv)
         TextView name;
-        @BindView(R.id.equipment_iv)
-        ImageView image;
+
         public equipmentViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

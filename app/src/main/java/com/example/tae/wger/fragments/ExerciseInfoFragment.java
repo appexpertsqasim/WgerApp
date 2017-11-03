@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.GenericRequestBuilder;
 import com.bumptech.glide.Glide;
@@ -188,19 +189,23 @@ public class ExerciseInfoFragment extends BaseFragment implements IExerciseInfoL
             return true; //we have a connection
         } else {
             realmExerciseInfoModel =controller.getOneItem(exerciseId);
-            Log.i("get Exerinfo", String.valueOf(realmExerciseInfoModel.getId()));
+            try {
                 category.setText(realmExerciseInfoModel.getCategory().getName());
                 name.setText(realmExerciseInfoModel.getName());
                 description.setText(realmExerciseInfoModel.getDescription());
                 final int size = realmExerciseInfoModel.getEquipment().size();
                 String s = "";
-                for (int i = 0; i < size; i++)
-                {
+                for (int i = 0; i < size; i++) {
                     s = s + " " + realmExerciseInfoModel.getEquipment().get(i).getName();
                 }
                 equipment.setText(s);
 
-            svgRealmImageLoader(realmExerciseInfoModel);
+                svgRealmImageLoader(realmExerciseInfoModel);
+            }catch(NullPointerException e){
+                Toast.makeText(getActivity(), "Load this page when Internet is available\n" +
+                                "to save it and view it in offline mode.",
+                        Toast.LENGTH_LONG).show();
+            }
            return false;
         }}
     private void initialiseDagger() {

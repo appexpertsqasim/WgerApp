@@ -44,7 +44,8 @@ public class WorkoutLogAdapter extends RecyclerView.Adapter<WorkoutLogAdapter.wo
     @Override
     public void onBindViewHolder(workoutlogViewHolder holder, int position) {
         holder.bind(workout.getResults().get(position), rListener);
-        holder.name.setText(workout.getResults().get(position).getId()+"--" +workout.getResults().get(position).getDate());
+        holder.name.setText(workout.getResults().get(position).getId()+"Exercise ID" +
+                workout.getResults().get(position).getId());
 
 
 

@@ -2,117 +2,146 @@ package com.example.tae.wger;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.tae.wger.ResideMenu.ResideMenu;
+import com.example.tae.wger.ResideMenu.ResideMenuItem;
 import com.example.tae.wger.fragments.EquipmentFragment;
 import com.example.tae.wger.fragments.ExerciseFragment;
 import com.example.tae.wger.fragments.MuscleFragment;
+import com.example.tae.wger.fragments.VideoFragment;
 import com.example.tae.wger.fragments.WorkoutFragment;
 import com.example.tae.wger.maps.NearestGyms;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-FragmentManager fragmentManager;
+public class MainActivity extends FragmentActivity implements View.OnClickListener{
+
+    private ResideMenu resideMenu;
+    private MainActivity mContext;
+    private ResideMenuItem itemHome;
+    private ResideMenuItem itemEquipment;
+    private ResideMenuItem itemExercise;
+    private ResideMenuItem itemWorkout;
+    private ResideMenuItem itemMuscle;
+    private ResideMenuItem itemGym;
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        fragmentManager=getSupportFragmentManager();;
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.main);
+        mContext = this;
+        setUpMenu();
+        if( savedInstanceState == null )
+            changeFragment(new VideoFragment());
+
+    }
+
+    private void setUpMenu() {
+
+        // attach to current activity;
+        resideMenu = new ResideMenu(this);
+        resideMenu.setUse3D(true);
+        resideMenu.setBackground(R.drawable.background);
+        resideMenu.attachToActivity(this);
+        resideMenu.setMenuListener(menuListener);
+        //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
+        resideMenu.setScaleValue(0.6f);
+
+        // create menu items;
+        itemHome     = new ResideMenuItem(this, R.drawable.ic_home_black_24dp, R.string.home);
+        itemEquipment  = new ResideMenuItem(this, R.drawable.ic_fitness_center_black_24dp,  R.string.equipment);
+        itemExercise = new ResideMenuItem(this, R.drawable.exercise2, R.string.exercises);
+        itemWorkout = new ResideMenuItem(this, R.drawable.workout, R.string.workout);
+        itemMuscle = new ResideMenuItem(this, R.drawable.muscles, "Muscles");
+        itemGym = new ResideMenuItem(this, R.drawable.ic_location_on_black_24dp, "Nearest Gyms");
+
+        itemHome.setOnClickListener(this);
+        itemEquipment.setOnClickListener(this);
+        itemExercise.setOnClickListener(this);
+        itemMuscle.setOnClickListener(this);
+        itemWorkout.setOnClickListener(this);
+        itemGym.setOnClickListener(this);
+
+        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemEquipment, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemWorkout, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemExercise, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(itemMuscle, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(itemGym, ResideMenu.DIRECTION_RIGHT);
+
+        // You can disable a direction by setting ->
+        // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+
+        findViewById(R.id.title_bar_left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent=new Intent(MainActivity.this,NearestGyms.class);
-                startActivity(intent);
+                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        findViewById(R.id.title_bar_right_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resideMenu.openMenu(ResideMenu.DIRECTION_RIGHT);
+            }
+        });
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return resideMenu.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view == itemHome){
+            changeFragment(new VideoFragment());
+        }else if (view == itemExercise){
+            changeFragment(new ExerciseFragment());
+        }else if (view == itemEquipment){
+            changeFragment(new EquipmentFragment());
+        }else if (view == itemWorkout){
+            changeFragment(new WorkoutFragment());
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        else if (view == itemMuscle){
+            changeFragment(new MuscleFragment());
+        }
+        else if (view == itemGym){
+            Intent intent=new Intent(MainActivity.this,NearestGyms.class);
+            startActivity(intent);
         }
 
-        return super.onOptionsItemSelected(item);
+        resideMenu.closeMenu();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-            fragmentManager.beginTransaction().replace(R.id.container,new EquipmentFragment())
-                    .commit();
-        } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction().replace(R.id.container,new ExerciseFragment())
-                    .commit();
-
-        } else if (id == R.id.nav_slideshow) {
-            fragmentManager.beginTransaction().replace(R.id.container,new MuscleFragment())
-                    .commit();
-
-        } else if (id == R.id.nav_manage) {
-            fragmentManager.beginTransaction().replace(R.id.container,new WorkoutFragment())
-                    .commit();
-
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-
+    private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
+        @Override
+        public void openMenu() {
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        @Override
+        public void closeMenu() {
+        }
+    };
+
+    private void changeFragment(Fragment targetFragment){
+        resideMenu.clearIgnoredViewList();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, targetFragment, "fragment")
+                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack("")
+                .commit();
     }
 
+    // What good method is to access resideMenu？
+    public ResideMenu getResideMenu(){
+        return resideMenu;
+    }
 }
